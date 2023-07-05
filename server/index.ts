@@ -1,20 +1,15 @@
-import express, { Express, Request, Response } from 'express';
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
+
+import { app } from "./app";
+import { connectDB } from "./src/dbConnection";
 
 dotenv.config();
 
-const app: Express = express();
-const port = process.env.PORT;
+(async () => {
+  await connectDB();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-
-app.get('/', (req: Request, res: Response) => {
-  res.send('Express + Typescript server');
-});
-
-
-app.listen(port, () => {
-  console.log('[server] Server is running at port', port);
-})
+  const port = process.env.PORT;
+  app.listen(port, () => {
+    console.log("[server] Server is running at port", port);
+  });
+})()
