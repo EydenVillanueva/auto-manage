@@ -3,7 +3,7 @@ import { Model, Table, Column, } from 'sequelize-typescript';
 @Table({
   timestamps: true,
 })
-export class Task extends Model {
+class Tasks extends Model<Tasks> {
 
   @Column
   title: string;
@@ -12,3 +12,5 @@ export class Task extends Model {
   description?: string;
 
 }
+
+export default Tasks
