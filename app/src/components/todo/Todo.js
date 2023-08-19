@@ -2,12 +2,16 @@ import React from 'react';
 import PropTypes from "prop-types";
 
 const Todo = props => {
-	const { id, title, description } = props;
+	const { id, title, description, status } = props;
 
 	return (
 		<li key={id} className="todo stack-small">
 			<div className="c-cb">
-				<input id="todo-0" type="checkbox" defaultChecked={true} />
+				<input
+					id="todo-0"
+					type="checkbox"
+					defaultChecked={status === "completed"}
+				/>
 				<label className="todo-label" htmlFor="todo-0">
 					{title}
 				</label>
@@ -31,6 +35,7 @@ Todo.propTypes = {
 	id: PropTypes.number,
 	title: PropTypes.string,
 	description: PropTypes.string,
+	status: PropTypes.string,
 };
 
 export default Todo;

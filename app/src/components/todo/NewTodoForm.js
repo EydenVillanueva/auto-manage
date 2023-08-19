@@ -1,8 +1,11 @@
-import React from 'react';
-import { Formik, Form, Field } from 'formik';
+import React, { useContext } from 'react';
+import { TodoAppContext } from "../../utils/contexts";
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 
 function NewTodoForm() {
+	// const { todoList, setTodoList } = useContext(TodoAppContext);
+
 	return (
 		<div>
 			<Formik
@@ -12,14 +15,16 @@ function NewTodoForm() {
 					if(!values.title) {
 						errors.title = "Required"
 					}
-					if(!values.title.length < 3){
+					if(values.title.length < 3){
 						errors.title = "Should be longer than 3 characters"
+					}
+					if(!values.description){
+						errors.description = "Required";
 					}
 					return errors;
 				}}
 				onSubmit={(values, { setSubmitting }) => {
 					setTimeout(() => {
-						alert(JSON.stringify(values, null, 2));
 						setSubmitting(false);
 					}, 400);
 				}}
@@ -32,9 +37,20 @@ function NewTodoForm() {
 							className="input input__lg"
 							id="new-todo-input"
 							autoComplete="off"
+							placeholder="task title"
 						/>
-						<button type="submit" className="btn" disabled={isSubmitting}>
-							Submit
+						<ErrorMessage name="title" component="div"/>
+						<Field
+							type="text"
+							name="description"
+							className="input input__lg"
+							id="new-todo-input"
+							autoComplete="off"
+							placeholder="task description"
+						/>
+						<ErrorMessage name="description" component="div"/>
+						<button type="submit" className="btn toggle-btn" disabled={isSubmitting}>
+							Add
 						</button>
 					</Form>
 				)}

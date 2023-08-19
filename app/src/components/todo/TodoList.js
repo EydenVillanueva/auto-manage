@@ -1,21 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
 
 import Todo from './Todo';
-
-TodoList.propTypes = {
-	todoList: PropTypes.arrayOf(PropTypes.shape({
-		id: PropTypes.number,
-		title: PropTypes.string,
-		description: PropTypes.string,
-	})),
-};
+import { TodoAppContext } from "../../utils/contexts";
 
 function TodoList(props) {
-	const { todoList } = props;
+	const { todoList } = useContext(TodoAppContext);
+	console.log(todoList);
 
 	const renderTodos = (todos) => todos.map((todo) => (
-		<Todo title={todo.title} id={todo.id} description={todo.description} />
+		<Todo
+			title={todo.title}
+			key={todo.id}
+			description={todo.description}
+			status={todo.status}
+		/>
 	));
 
 	return (
