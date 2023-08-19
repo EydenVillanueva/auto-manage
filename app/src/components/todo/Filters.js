@@ -1,40 +1,46 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {TodoAppContext} from "../../utils/contexts";
 
 function Filters(props) {
 
-	// const { todoList, setTodos } = props;
-	const {todoList, setTodoList} = useContext(TodoAppContext);
+	const { setList } = props;
+	const { todoList } = useContext(TodoAppContext);
+	const [currentFilter, setCurrentFilter] = useState('all');
 
-	const handleFilter = (e) => {
-		const type = e.target.textContent;
-		const filteredTodos = todoList.filter(todo => {
-			if(type === 'all') return todo;
-			else if(type === todo.status) return todo;
-		})
-		setTodoList(filteredTodos);
-	}
+	// const type = e.target.textContent;
+
+	useEffect(() => {
+		if(currentFilter === 'all'){
+			setList(todoList);
+			return;
+		}
+		setList(
+			todoList.filter((item) => {
+				if (currentFilter === item.status) return item;
+			})
+		);
+	}, [currentFilter]);
 
 	return (
 		<div className="filters btn-group stack-exception">
 			<button
 				type="button"
 				className="btn toggle-btn"
-				onClick={(e) => handleFilter(e)}
+				onClick={(e) => setCurrentFilter('all')}
 			>
 				all
 			</button>
 			<button
 				type="button"
 				className="btn toggle-btn"
-				onClick={(e) => handleFilter(e)}
+				onClick={(e) => setCurrentFilter('active')}
 			>
 				active
 			</button>
 			<button
 				type="button"
 				className="btn toggle-btn"
-				onClick={(e) => handleFilter(e)}
+				onClick={(e) => setCurrentFilter('completed')}
 			>
 				completed
 			</button>

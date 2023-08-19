@@ -1,11 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import Todo from './Todo';
 import { TodoAppContext } from "../../utils/contexts";
+import Filters from "./Filters";
 
 function TodoList(props) {
 	const { todoList } = useContext(TodoAppContext);
-	console.log(todoList);
+	const [ renderList, setRenderList ] = useState([...todoList]);
 
 	const renderTodos = (todos) => todos.map((todo) => (
 		<Todo
@@ -18,12 +19,13 @@ function TodoList(props) {
 
 	return (
 		<div>
-		<h2 id="list-heading">3 tasks remaining</h2>
-		<ul
-			className="todo-list stack-large stack-exception"
-			aria-labelledby="list-heading">
-			{renderTodos(todoList)}
-		</ul>
+			<Filters setList={setRenderList}/>
+			<h2 id="list-heading">3 tasks remaining</h2>
+			<ul
+				className="todo-list stack-large stack-exception"
+				aria-labelledby="list-heading">
+				{renderTodos(renderList)}
+			</ul>
 	</div>
 	);
 }

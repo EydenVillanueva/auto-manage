@@ -16,7 +16,6 @@ function TodoView() {
 			<div className="todoapp stack-large">
 				<h1>Auto manage</h1>
 				<NewTodoForm />
-				<Filters />
 				<TodoList />
 			</div>
 		</TodoAppContext.Provider>
