@@ -13,6 +13,9 @@ export const connectDB = async () => {
     models: [__dirname + "/tasks/models"],
   });
 
+  // if(process.env.NODE_ENV !== 'PROD')
+  //   await sequelize.sync({ force: true });
+
   const db: any = {};
   db.Sequelize = Sequelize;
   db.sequelize = sequelize;

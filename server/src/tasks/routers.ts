@@ -32,6 +32,8 @@ taskRouter.post('/tasks', async (req: Request, res: Response) => {
 
   if(!body.title)
     res.json({ status: 400, code: "title is required" });
+  if(!body.status)
+    body.status = 'active';
 
   try{
     const newTask = await service.create(body);
