@@ -1,14 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import NewTodoForm from "../components/todo/NewTodoForm";
 import TodoList from "../components/todo/TodoList";
 import { TodoAppContext } from "../utils/contexts";
+import { getTasks } from '../api/api';
 
 function TodoView() {
-	const [todoList, setTodoList] = useState([
-		{ id: 1, title: "do your bed", description: "you have to make your bed in the morning", status: "active" },
-		{ id: 2, title: "eat your breakfast", description: "you have to cook and eat every morning", status: "completed" },
-		{ id: 3, title: "Go to the Gym", description: "wake up early and drive to the gym", status: "active" },
-	]);
+	const [todoList, setTodoList] = useState([]);
+
+	useEffect(() => {
+		const getAllTasks = async () => {
+			const response = await getTasks();
+			setTodoList(response.data);
+		}
+
+		getAllTasks();
+	}, []);
+
 
 	return (
 		<TodoAppContext.Provider value={{ todoList, setTodoList }}>

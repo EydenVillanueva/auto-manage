@@ -8,7 +8,6 @@ function Filters(props) {
 	const [filteredList, setFilteredList] = useState([...todoList]);
 
 	useEffect(() => {
-		debugger;
 		if(currentFilter === 'all'){
 			setTodoList([...filteredList]);
 			return;

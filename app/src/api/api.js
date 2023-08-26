@@ -1,5 +1,6 @@
-import config from '../config';
+import api from './base';
 
-const getTasks = () => {
-	const { BASE_SERVER_URL } = config;
+export const getTasks = async () => {
+	const { data } = await api.get('tasks');
+	return data;
 }

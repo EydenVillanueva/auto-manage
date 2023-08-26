@@ -6,7 +6,6 @@ import Filters from "./Filters";
 
 function TodoList(props) {
 	const { todoList } = useContext(TodoAppContext);
-	const context = useContext(TodoAppContext);
 	const [renderList, setRenderList] = useState([]);
 
 	const renderTodos = () => todoList.map((todo) => {
@@ -24,12 +23,16 @@ function TodoList(props) {
 
 	return (
 		<div>
-			<Filters filteredList={[...todoList]}/>
+			<Filters />
 			<h2 id="list-heading">3 tasks remaining</h2>
 			<ul
 				className="todo-list stack-large stack-exception"
 				aria-labelledby="list-heading">
-				{renderList}
+				{ renderList.length ?
+					renderList
+					:
+					<p>Nothing to see here...</p>
+				}
 			</ul>
 	</div>
 	);
