@@ -1,25 +1,29 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {TodoAppContext} from "../../utils/contexts";
+import todo from "./Todo";
 
 function Filters(props) {
-
-	const { setList } = props;
-	const { todoList } = useContext(TodoAppContext);
+	const { todoList, setTodoList } = useContext(TodoAppContext);
 	const [currentFilter, setCurrentFilter] = useState('all');
-
-	// const type = e.target.textContent;
+	const [filteredList, setFilteredList] = useState([...todoList]);
 
 	useEffect(() => {
+		debugger;
 		if(currentFilter === 'all'){
-			setList(todoList);
+			setTodoList([...filteredList]);
 			return;
 		}
-		setList(
-			todoList.filter((item) => {
+		setTodoList(
+			filteredList.filter((item) => {
 				if (currentFilter === item.status) return item;
 			})
 		);
 	}, [currentFilter]);
+
+	useEffect(() => {
+		if(currentFilter === 'all' && filteredList.length !== todo.length)
+			setFilteredList([...todoList]);
+	}, [todoList]);
 
 	return (
 		<div className="filters btn-group stack-exception">

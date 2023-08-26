@@ -4,7 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 
 function NewTodoForm() {
-	// const { todoList, setTodoList } = useContext(TodoAppContext);
+	const { setTodoList } = useContext(TodoAppContext);
 
 	return (
 		<div>
@@ -23,10 +23,18 @@ function NewTodoForm() {
 					}
 					return errors;
 				}}
-				onSubmit={(values, { setSubmitting }) => {
+				onSubmit={(values, { setSubmitting, resetForm }) => {
+					setTodoList((list) => {
+						return [{
+							id: values.title,
+							...values,
+							status: 'active'
+						}, ...list];
+					});
+					resetForm({values: ''})
 					setTimeout(() => {
 						setSubmitting(false);
-					}, 400);
+					}, 400)
 				}}
 			>
 				{({ isSubmitting }) => (
@@ -50,7 +58,7 @@ function NewTodoForm() {
 						/>
 						<ErrorMessage name="description" component="div"/>
 						<button type="submit" className="btn toggle-btn" disabled={isSubmitting}>
-							Add
+							Create
 						</button>
 					</Form>
 				)}

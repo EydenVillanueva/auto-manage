@@ -1,7 +1,6 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import NewTodoForm from "../components/todo/NewTodoForm";
 import TodoList from "../components/todo/TodoList";
-import Filters from "../components/todo/Filters";
 import { TodoAppContext } from "../utils/contexts";
 
 function TodoView() {
