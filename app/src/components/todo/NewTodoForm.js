@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
-import { TodoAppContext } from "../../utils/contexts";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-
+import { TodoAppContext } from "../../utils/contexts";
+import { createTask } from '../../api/api'
 
 function NewTodoForm() {
 	const { setTodoList } = useContext(TodoAppContext);
@@ -23,13 +23,16 @@ function NewTodoForm() {
 					}
 					return errors;
 				}}
-				onSubmit={(values, { setSubmitting, resetForm }) => {
+				onSubmit={async (values, {setSubmitting, resetForm}) => {
+
+					const response = await createTask({
+						...values,
+						status: 'active'
+					});
+					const newTodo = response.data;
+
 					setTodoList((list) => {
-						return [{
-							id: values.title,
-							...values,
-							status: 'active'
-						}, ...list];
+						return [newTodo, ...list];
 					});
 					resetForm({values: ''})
 					setTimeout(() => {
