@@ -14,6 +14,15 @@ export const createTask = async (body) => {
 		const { data } = await api.post('tasks', body);
 		return data;
 	} catch (e) {
-		throw new Error('Error while fetching tasks', e);
+		throw new Error('Error while creating task', e);
+	}
+}
+
+export const updateTaskStatus = async (id, status) => {
+	try {
+		const { data } = await api.put(`tasks/${id}`, { status, });
+		return data;
+	} catch (e) {
+		throw new Error('Error while updating task status', e);
 	}
 }

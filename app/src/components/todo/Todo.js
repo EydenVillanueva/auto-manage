@@ -1,22 +1,30 @@
 import React, { useContext } from 'react';
 import PropTypes from "prop-types";
-import {TodoAppContext} from "../../utils/contexts";
+import { TodoAppContext } from "../../utils/contexts";
+import { updateTaskStatus } from "../../api/api";
 
 const Todo = props => {
 	const { id, title, description, status } = props;
 	const { setTodoList } = useContext(TodoAppContext);
-	const handleChecked = (e) => {
-		console.log(e);
+
+	const handleChecked = async (id, e) => {
+		const status = e.target.checked ? "completed" : "active";
+		await updateTaskStatus(id, status);
+		setTodoList((list) => {
+			return list.map( item => {
+				if(item.id === id) item.status = status;
+				return item;
+			});
+		});
 	}
 
 	return (
-		<li key={id} className="todo stack-small">
+		<li key={`${title}-${id}`} className="todo stack-small">
 			<div className="c-cb">
 				<input
-					id="todo-0"
 					type="checkbox"
 					defaultChecked={status === "completed"}
-					onChange={(e) => handleChecked(e)}
+					onChange={(e) => handleChecked(id, e)}
 				/>
 				<label className="todo-label" htmlFor="todo-0">
 					{title}

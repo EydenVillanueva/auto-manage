@@ -10,6 +10,7 @@ function TodoList(props) {
 
 	const renderTodos = () => todoList.map((todo) => {
 		return <Todo
+			id={todo.id}
 			title={todo.title}
 			key={todo.id}
 			description={todo.description}
