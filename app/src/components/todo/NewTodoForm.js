@@ -32,7 +32,7 @@ function NewTodoForm() {
 					const newTodo = response.data;
 
 					setTodoList((list) => {
-						return [newTodo, ...list];
+						return [...list, newTodo];
 					});
 					resetForm({values: ''})
 					setTimeout(() => {

@@ -26,3 +26,21 @@ export const updateTaskStatus = async (id, status) => {
 		throw new Error('Error while updating task status', e);
 	}
 }
+
+export const updateTask = async (id, body) => {
+	try {
+		const { data } = await api.put(`tasks/${id}`, { ...body });
+		return data;
+	} catch (e) {
+		throw new Error('Error while updating task status', e);
+	}
+}
+
+export const deleteTask = async (id) => {
+	try {
+		const { data } = await api.delete(`tasks/${id}`);
+		return data;
+	} catch (e) {
+		throw new Error('Error while updating task status', e);
+	}
+}

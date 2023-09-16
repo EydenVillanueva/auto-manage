@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from "prop-types";
 import { TodoAppContext } from "../../utils/contexts";
-import { updateTaskStatus } from "../../api/api";
+import { updateTaskStatus, deleteTask } from "../../api/api";
 
 const Todo = props => {
 	const { id, title, description, status } = props;
@@ -15,6 +15,14 @@ const Todo = props => {
 				if(item.id === id) item.status = status;
 				return item;
 			});
+		});
+	}
+
+	const handleDeleted = async (id) => {
+		debugger;
+		await deleteTask(id);
+		setTodoList((list) => {
+			return list.filter( item => item.id !== id)
 		});
 	}
 
@@ -37,7 +45,11 @@ const Todo = props => {
 				<button type="button" className="btn">
 					Edit <span className="visually-hidden">{title}</span>
 				</button>
-				<button type="button" className="btn btn__danger">
+				<button
+					type="button"
+					className="btn btn__danger"
+					onClick={() => handleDeleted(id)}
+				>
 					Delete <span className="visually-hidden">{title}</span>
 				</button>
 			</div>
